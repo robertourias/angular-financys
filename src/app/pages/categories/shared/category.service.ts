@@ -8,7 +8,7 @@ import { Category } from './category.model';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiPath: string = 'api/categories';
+  private apiPath = 'api/categories';
 
   constructor(private http: HttpClient) {}
 
