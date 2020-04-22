@@ -5,7 +5,7 @@ import { map, catchError, flatMap } from 'rxjs/operators';
 import { Category } from './category.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   private apiPath = 'api/categories';
@@ -13,25 +13,22 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Category[]> {
-    return this.http.get(this.apiPath).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToCategories)
-    );
+    return this.http
+      .get(this.apiPath)
+      .pipe(catchError(this.handleError), map(this.jsonDataToCategories));
   }
 
   getById(id: number): Observable<Category> {
     const url = `${this.apiPath}/${id}`;
-    return this.http.get(url).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToCategory)
-    );
+    return this.http
+      .get(url)
+      .pipe(catchError(this.handleError), map(this.jsonDataToCategory));
   }
 
   create(category: Category): Observable<Category> {
-    return this.http.post(this.apiPath, category).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToCategory)
-    );
+    return this.http
+      .post(this.apiPath, category)
+      .pipe(catchError(this.handleError), map(this.jsonDataToCategory));
   }
 
   update(category: Category): Observable<Category> {
@@ -39,7 +36,7 @@ export class CategoryService {
 
     return this.http.put(url, category).pipe(
       catchError(this.handleError),
-      map(() => category)
+      map(() => category),
     );
   }
 
@@ -48,7 +45,7 @@ export class CategoryService {
 
     return this.http.delete(url).pipe(
       catchError(this.handleError),
-      map(() => null)
+      map(() => null),
     );
   }
 
