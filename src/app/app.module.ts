@@ -7,9 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDatabase } from './in-memory-database';
+import { TesteComponentComponent } from './teste-component/teste-component.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TesteComponentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
