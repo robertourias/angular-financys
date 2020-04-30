@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { EntryModel } from './shared/entry.model';
+import { EntryModel } from './entry.model';
 
 @Injectable({
   providedIn: 'root',

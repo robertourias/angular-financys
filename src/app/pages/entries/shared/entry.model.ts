@@ -8,7 +8,7 @@ export class EntryModel {
     public type?: string,
     public amount?: string,
     public date?: string,
-    public paid?: number,
+    public paid?: boolean,
     public categoryId?: number,
     public category?: Category
   ) {}
@@ -19,6 +19,6 @@ export class EntryModel {
   }
 
   get paidText() {
-    return this.paid? 'Pago' : 'Pendente';
+    return this.paid ? 'Pago' : 'Pendente';
   }
 }
