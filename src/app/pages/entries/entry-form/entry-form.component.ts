@@ -107,6 +107,15 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  get typeOptions(): Array<any> {
+    return Object.entries(EntryModel.types).map(([value, text]) => {
+      return {
+        value: value,
+        text: text,
+      };
+    });
+  }
+
   private setCurrentAction() {
     if (this.route.snapshot.url[0].path == "new") {
       this.currentAction = "new";

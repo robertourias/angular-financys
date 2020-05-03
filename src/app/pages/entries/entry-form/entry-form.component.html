@@ -168,8 +168,9 @@
             formControlName="categoryId"
             class="form-control"
           >
-            <option value="1">Categoria 1</option>
-            <option value="2">Categoria 2</option>
+            <option *ngFor="let option of typeOptions" [value]="option.value">{{
+              option.text
+            }}</option>
           </select>
 
           <div
