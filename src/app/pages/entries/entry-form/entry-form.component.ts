@@ -14,6 +14,8 @@ import { switchMap } from "rxjs/operators";
 
 import toastr from "toastr";
 import { toBase64String } from "@angular/compiler/src/output/source_map";
+import { Category } from "../../categories/shared/category.model";
+import { CategoryService } from "../../categories/shared/category.service";
 
 @Component({
   selector: "app-Entry-form",
@@ -27,6 +29,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   serverErrorMessages: string[];
   submittingForm = false;
   entry: EntryModel = new EntryModel();
+  categories: Category[];
   imaskConfig = {
     mask: Number,
     scale: 2,
@@ -84,13 +87,15 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     private entryService: EntryService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit() {
     this.setCurrentAction();
     this.buildEntryForm();
     this.loadEntry();
+    this.loadCategories();
   }
 
   ngAfterContentChecked() {
@@ -134,6 +139,12 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       date: [null, [Validators.required]],
       paid: [null, [Validators.required]],
       categoryId: [null, [Validators.required]],
+    });
+  }
+
+  private loadCategories() {
+    this.categoryService.getAll().subscribe((categories) => {
+      this.categories = categories;
     });
   }
 
