@@ -205,10 +205,10 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
 
     // redirect/reload page
     this.router
-      .navigateByUrl("categories", { skipLocationChange: true })
+      .navigateByUrl("entries", { skipLocationChange: true })
       .then(() => {
         if (this.currentAction === "new") {
-          this.router.navigate(["categories", entry.id, "edit"]);
+          this.router.navigate(["entries", entry.id, "edit"]);
         }
       });
   }

@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { EntryModel } from './entry.model';
+import { Injectable } from "@angular/core";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { map, catchError, flatMap } from "rxjs/operators";
+import { EntryModel } from "./entry.model";
+import { CategoryService } from "../../categories/shared/category.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class EntryService {
-  private apiPath = 'api/entries';
+  private apiPath = "api/entries";
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private categoryService: CategoryService
+  ) {}
 
   getAll(): Observable<EntryModel[]> {
     return this.http
@@ -26,9 +30,15 @@ export class EntryService {
   }
 
   create(entry: EntryModel): Observable<EntryModel> {
-    return this.http
-      .post(this.apiPath, entry)
-      .pipe(catchError(this.handleError), map(this.jsonDataToEntry));
+    return this.categoryService.getById(entry.categoryId).pipe(
+      flatMap((category) => {
+        entry.category = category;
+
+        return this.http
+          .post(this.apiPath, entry)
+          .pipe(catchError(this.handleError), map(this.jsonDataToEntry));
+      })
+    );
   }
 
   update(entry: EntryModel): Observable<EntryModel> {
@@ -36,7 +46,7 @@ export class EntryService {
 
     return this.http.put(url, entry).pipe(
       catchError(this.handleError),
-      map(() => entry),
+      map(() => entry)
     );
   }
 
@@ -45,7 +55,7 @@ export class EntryService {
 
     return this.http.delete(url).pipe(
       catchError(this.handleError),
-      map(() => null),
+      map(() => null)
     );
   }
 
@@ -53,7 +63,7 @@ export class EntryService {
 
   private jsonDataToEntries(jsonData: any[]): EntryModel[] {
     const entries: EntryModel[] = [];
-    jsonData.forEach(element => {
+    jsonData.forEach((element) => {
       let entry = Object.assign(new EntryModel(), element);
       entries.push(entry);
     });
@@ -65,7 +75,7 @@ export class EntryService {
   }
 
   private handleError(error: any): Observable<any> {
-    console.log('ERRO NA REQUISÇÃO => ', error);
+    console.log("ERRO NA REQUISÇÃO => ", error);
     return throwError(error);
   }
 }
