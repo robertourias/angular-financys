@@ -13,7 +13,7 @@ import { Observable } from "rxjs";
 import { switchMap } from "rxjs/operators";
 
 import toastr from "toastr";
-import { toBase64String } from '@angular/compiler/src/output/source_map';
+import { toBase64String } from "@angular/compiler/src/output/source_map";
 
 @Component({
   selector: "app-Entry-form",
@@ -27,6 +27,58 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   serverErrorMessages: string[];
   submittingForm = false;
   entry: EntryModel = new EntryModel();
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousantsSeparator: "",
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ",",
+  };
+  ptBR = {
+    firstDayOfWeek: 0,
+    dayNames: [
+      "Domingo",
+      "Segunda",
+      "Terça",
+      "Quarta",
+      "Quinta",
+      "Sexta",
+      "Sábado",
+    ],
+    dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+    dayNamesMin: ["Do", "Se", "Te", "Qu", "Qu", "Se", "Sa"],
+    monthNames: [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ],
+    monthNamesShort: [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ],
+    today: "Hoje",
+    clear: "Limpar",
+  };
 
   constructor(
     private entryService: EntryService,
@@ -48,10 +100,9 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   submitForm() {
     this.submittingForm = true;
 
-    if(this.currentAction === 'new') {
+    if (this.currentAction === "new") {
       this.createEntry();
-    }
-    else {
+    } else {
       this.udpateEntry();
     }
   }
@@ -70,19 +121,17 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       name: [null, [Validators.required, Validators.minLength(2)]],
       description: [null],
       type: [null, [Validators.required]],
-      amout: [null, [Validators.required]],
+      amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
       paid: [null, [Validators.required]],
-      categoryId: [null, [Validators.required]]
+      categoryId: [null, [Validators.required]],
     });
   }
 
   private loadEntry() {
     if (this.currentAction === "edit") {
       this.route.paramMap
-        .pipe(
-          switchMap((param) => this.entryService.getById(+param.get("id")))
-        )
+        .pipe(switchMap((param) => this.entryService.getById(+param.get("id"))))
         .subscribe(
           (entry) => {
             this.entry = entry;
@@ -106,48 +155,55 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private createEntry() {
-    const entry = Object.assign(new EntryModel, this.entryForm.value);
+    const entry = Object.assign(new EntryModel(), this.entryForm.value);
 
-    this.entryService.create(entry).subscribe((entry) => {
-      this.actionsForSuccess(entry);
-    }, (error) => {
-      this.actionsForError(error);
-    });
+    this.entryService.create(entry).subscribe(
+      (entry) => {
+        this.actionsForSuccess(entry);
+      },
+      (error) => {
+        this.actionsForError(error);
+      }
+    );
   }
 
   private udpateEntry() {
-    const entry = Object.assign(new EntryModel, this.entryForm.value);
+    const entry = Object.assign(new EntryModel(), this.entryForm.value);
 
-    this.entryService.update(entry).subscribe((entry) => {
-      this.actionsForSuccess(entry);
-    }, (error) => {
-      this.actionsForError(error);
-    });
+    this.entryService.update(entry).subscribe(
+      (entry) => {
+        this.actionsForSuccess(entry);
+      },
+      (error) => {
+        this.actionsForError(error);
+      }
+    );
   }
 
-  private actionsForSuccess(Entry: Entry) {
-    toastr.success('Solicitação processada com sucesso!');
+  private actionsForSuccess(entry: EntryModel) {
+    toastr.success("Solicitação processada com sucesso!");
 
     // redirect/reload page
-    this.router.navigateByUrl('categories', {skipLocationChange: true}).then(() => {
-      if(this.currentAction === "new") {
-        this.router.navigate(['categories', Entry.id, 'edit']);
-      }
-    });
+    this.router
+      .navigateByUrl("categories", { skipLocationChange: true })
+      .then(() => {
+        if (this.currentAction === "new") {
+          this.router.navigate(["categories", entry.id, "edit"]);
+        }
+      });
   }
 
   private actionsForError(error: any) {
-    toastr.error('Ocorreu um erro ao processar a sua solicitação!');
+    toastr.error("Ocorreu um erro ao processar a sua solicitação!");
 
     this.submittingForm = false;
 
-    if(error.status === 422) {
+    if (error.status === 422) {
       this.serverErrorMessages = JSON.parse(error._body).errors;
+    } else {
+      this.serverErrorMessages = [
+        "Falha na comunicação. Por favor, tente mais tarde!",
+      ];
     }
-    else {
-      this.serverErrorMessages = ['Falha na comunicação. Por favor, tente mais tarde!'];
-    }
-
   }
-
 }
