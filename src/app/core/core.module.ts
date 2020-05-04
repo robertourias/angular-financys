@@ -13,6 +13,11 @@ import { InMemoryDatabase } from "../in-memory-database";
     BrowserAnimationsModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase),
+  ],
+  exports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
   ]
 })
 export class CoreModule { }
