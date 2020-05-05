@@ -43,13 +43,13 @@ export class EntryService extends BaseResourceService<EntryModel> {
   protected jsonDataToResources(jsonData: any[]): EntryModel[] {
     const entries: EntryModel[] = [];
     jsonData.forEach((element) => {
-      let entry = Object.assign(new EntryModel(), element);
+      let entry = EntryModel.fromJson(element);
       entries.push(entry);
     });
     return entries;
   }
 
   protected jsonDataToResource(jsonData: any): EntryModel {
-    return Object.assign(new EntryModel(), jsonData);
+    return EntryModel.fromJson(jsonData);
   }
 }
