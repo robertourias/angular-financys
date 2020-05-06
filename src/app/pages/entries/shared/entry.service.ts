@@ -15,7 +15,7 @@ export class EntryService extends BaseResourceService<EntryModel> {
     private categoryService: CategoryService,
     protected injector: Injector
   ) {
-    super("api/entries", injector)
+    super("api/entries", injector, EntryModel.fromJson)
   }
 
   create(entry: EntryModel): Observable<EntryModel> {
@@ -36,20 +36,5 @@ export class EntryService extends BaseResourceService<EntryModel> {
         return super.update(entry);
       })
     );
-  }
-
-
-  // Protected métods
-  protected jsonDataToResources(jsonData: any[]): EntryModel[] {
-    const entries: EntryModel[] = [];
-    jsonData.forEach((element) => {
-      let entry = EntryModel.fromJson(element);
-      entries.push(entry);
-    });
-    return entries;
-  }
-
-  protected jsonDataToResource(jsonData: any): EntryModel {
-    return EntryModel.fromJson(jsonData);
   }
 }
