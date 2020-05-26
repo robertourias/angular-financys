@@ -28,12 +28,7 @@
             </option>
           </select>
 
-          <div
-            class="text-danger"
-            *ngIf="
-              resourceForm.get('type').invalid && resourceForm.get('type').touched
-            "
-          >
+          <div class="text-danger" *ngIf="resourceForm.get('type').invalid && resourceForm.get('type').touched">
             <div *ngIf="resourceForm.get('type').errors.required">
               Campo obrigatório
             </div>
