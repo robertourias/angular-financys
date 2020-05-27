@@ -5,10 +5,11 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { RouterModule } from '@angular/router';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { FormFieldsErrorComponent } from './components/form-fields-error/form-fields-error.component';
+import { ServerErrorMessagesComponent } from './components/server-error-messages/server-error-messages.component';
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent, PageHeaderComponent, FormFieldsErrorComponent],
+  declarations: [BreadcrumbComponent, PageHeaderComponent, FormFieldsErrorComponent, ServerErrorMessagesComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -18,10 +19,12 @@ import { FormFieldsErrorComponent } from './components/form-fields-error/form-fi
     // shared modules
     CommonModule,
     ReactiveFormsModule,
-    BreadcrumbComponent,
     RouterModule,
+    // shared components
+    BreadcrumbComponent,
     PageHeaderComponent,
     FormFieldsErrorComponent,
+    ServerErrorMessagesComponent,
   ]
 })
 export class SharedModule { }
