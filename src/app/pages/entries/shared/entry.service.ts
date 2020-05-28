@@ -32,7 +32,7 @@ export class EntryService extends BaseResourceService<EntryModel> {
   getByMonthAndYear(month: number, year: number): Observable<EntryModel[]> {
     // Ideal mandar pro back-end. Nosso caso com banco mocado
     return this.getAll().pipe(
-      map(entries => this.filterByMonthAndYear(entries,month, year))
+      map(entries => this.filterByMonthAndYear(entries, month, year))
     );
   }
 
@@ -52,7 +52,7 @@ export class EntryService extends BaseResourceService<EntryModel> {
     return entries.filter(entry => {
       const entryDate = moment(entry.date, "DD/MM/YYYY");
       const monthMatches = entryDate.month() + 1 == month;
-      const yearMatches = entryDate.year() == year;
+      const yearMatches = entryDate
       if(monthMatches && yearMatches) {
         return entry;
       }

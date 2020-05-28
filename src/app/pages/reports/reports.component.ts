@@ -32,7 +32,7 @@ export class ReportsComponent implements OnInit {
   categories: Category[] = [];
   entries: EntryModel[] = [];
 
-  @ViewChild('mouth') mouth: ElementRef = null;
+  @ViewChild('month') month: ElementRef = null;
   @ViewChild('year') year: ElementRef = null;
 
   constructor(private entryService: EntryService, private categoryService: CategoryService) { }
@@ -44,7 +44,7 @@ export class ReportsComponent implements OnInit {
 
 
   generateReports(){
-    const month = this.mouth.nativeElement.value;
+    const month = this.month.nativeElement.value;
     const year = this.year.nativeElement.value;
 
     if(!month || !year) {
@@ -57,7 +57,7 @@ export class ReportsComponent implements OnInit {
 
 
   private setValues(entries: EntryModel[]) {
-    this.entries= entries;
+    this.entries = entries;
     this.calculateBalance();
     this.setChartData();
   }
@@ -69,15 +69,16 @@ export class ReportsComponent implements OnInit {
 
     this.entries.forEach(entry => {
       if(entry.type === 'revenue')
-        revenueTotal += currecyFormatter.unformat(entry.amount, { code: 'BRL' });
+        revenueTotal += parseFloat(entry.amount.replace(',','.'));
 
       else
-        expenseTotal += currecyFormatter.unformat(entry.amount, { code: 'BRL' });
+        expenseTotal += parseFloat(entry.amount.replace(',','.'));
+
     });
 
-    this.expenseTotal = currecyFormatter.format(expenseTotal, { code: 'BRL' });
-    this.revenueTotal = currecyFormatter.format(revenueTotal, { code: 'BRL' });
-    this.balance = currecyFormatter.format(revenueTotal - expenseTotal, { code: 'BRL'});
+    this.expenseTotal = expenseTotal.toString().replace('.',',');
+    this.revenueTotal = revenueTotal.toString().replace('.',',');
+    this.balance = (revenueTotal - expenseTotal).toString().replace('.',',');
   }
 
 
@@ -91,12 +92,12 @@ export class ReportsComponent implements OnInit {
     const chartData = [];
     this.categories.forEach(category => {
       // Filtrando lançamentos pela categoria e tipo
-      const filteredEntries = this.entries.filter(entry => entry.category == category.id && entry.type == entryType);
+      const filteredEntries = this.entries.filter(entry => entry.categoryId == category.id && entry.type == entryType);
 
       // Só mostrar categorias no grafico que tenham lançamentos
       if(filteredEntries.length> 0) {
         const totalAmount = filteredEntries.reduce(
-          (total, entry) => total + currecyFormatter.format(entry.amount, { code: 'BRL' }), 0
+          (total, entry) => total + parseFloat(entry.amount), 0
         );
 
         chartData.push({

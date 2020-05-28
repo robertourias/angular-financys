@@ -15,20 +15,20 @@
 
       <div class="form-group col-md-7">
         <label for="mouth">Mês</label>
-        <select #mouth name="mouth" id="mouth" class="form-control">
+        <select #month name="month" id="month" class="form-control">
           <option value="">Selecione um mês</option>
-          <option value="Janeiro">Janeiro</option>
-          <option value="Fevereiro">Fevereiro</option>
-          <option value="Março">Março</option>
-          <option value="Abril">Abril</option>
-          <option value="Maio">Maio</option>
-          <option value="Junho">Junho</option>
-          <option value="Julho">Julho</option>
-          <option value="Agosto">Agosto</option>
-          <option value="Setembro">Setembro</option>
-          <option value="Outubro">Outubro</option>
-          <option value="Novembro">Novembro</option>
-          <option value="Dezembro">Dezembro</option>
+          <option value="1">Janeiro</option>
+          <option value="2">Fevereiro</option>
+          <option value="3">Março</option>
+          <option value="4">Abril</option>
+          <option value="5">Maio</option>
+          <option value="6">Junho</option>
+          <option value="7">Julho</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
         </select>
       </div>
 
@@ -59,7 +59,7 @@
     <div class="card-header">TOTAL DE RECEITAS</div>
 
     <div class="card-body">
-      <h3 class="card-title">1500</h3>
+      <h3 class="card-title">{{revenueTotal | currency: 'BRL'}}</h3>
     </div>
   </div>
 
@@ -67,7 +67,7 @@
     <div class="card-header">TOTAL DE DESPESAS</div>
 
     <div class="card-body">
-      <h3 class="card-title">500</h3>
+      <h3 class="card-title">{{expenseTotal | currency: 'BRL'}}</h3>
     </div>
   </div>
 
@@ -75,7 +75,7 @@
     <div class="card-header">SALDO</div>
 
     <div class="card-body">
-      <h3 class="card-title">1000</h3>
+      <h3 class="card-title">{{balance | currency: 'BRL'}}</h3>
     </div>
   </div>
 </div>
@@ -84,10 +84,10 @@
 
 <div class="row mt-5 mb-4">
   <div class="col-md-6">
-    GRAFICO DE RECEITAS
+    <p-chart type="bar" [data]="revenueChartData" [options]="chartOptions"></p-chart>
   </div>
 
   <div class="col-md-6">
-    GRAFICO DE DESPESAS
+    <p-chart type="bar" [data]="expenseChartData" [options]="chartOptions"></p-chart>
   </div>
 </div>
