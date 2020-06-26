@@ -1,27 +1,31 @@
 # Financys
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
+Projeto para organização financeira desenvolvido para aplicação de padrões de arquitetura mais avançada em Angular
 
-## Development server
+## Rodando aplicação
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Rode `ng serve` e teste a aplicação em `http://localhost:4200/`. O projeto vai automaticamente fazer um reload toda vez que houver uma alteração.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Rode `ng build` para gerar um build do projeto. Os arquivos gerados no build ficarão na pasta `dist/`. Use a flag `--prod` para gerar um build de produção.
 
-## Running unit tests
+## Rodando os testes
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Rode `ng test` para executar os testes unitários com [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Rodando os testes end-to-end
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Rode `ng e2e` para executar os testes end-to-end via [Protractor](http://www.protractortest.org/).
 
-## Further help
+## Telas do projeto
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+![Página inicial](https://i.imgur.com/gS1cIVw.png "Página inicial")
+
+![Categorias](https://i.imgur.com/d1PKSGw.png "Categorias")
+
+![Form Categorias](https://i.imgur.com/PdjFj8C.png "Form Categorias")
+
+![Lançamentos](https://i.imgur.com/gS1cIVw.png "Lançamentos")
+
+![Form Lançamentos](https://i.imgur.com/pedaTHP.png "Form Lançamentos")
